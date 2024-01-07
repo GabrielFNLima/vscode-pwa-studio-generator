@@ -4,7 +4,7 @@
 	"description": "Tool for creating React components and enhancements for PWA Studio.",
 	"author": "Gabriel Lima <gabriel.lima@devgfnl.com>",
 	"publisher": "devgfnl",
-	"version": "0.0.4",
+	"version": "1.0.0",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
@@ -17,7 +17,7 @@
 	"galleryBanner": {
 		"color": "#004F89",
 		"theme": "dark"
-	  },
+	},
 	"keywords": [
 		"Magento 2",
 		"PWA Studio",
