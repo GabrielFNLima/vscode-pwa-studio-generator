@@ -128,7 +128,7 @@ export async function multiStepInput(context: ExtensionContext, uri: any) {
 
 
 class Extension {
-	static templateDir: string = path.join(__dirname, '../src/templates/extension');
+	static templateDir: string = path.join(__dirname, '../templates/extension');
 
 	static async create(state: State) {
 		const createFolders = await this.createFolders(state.packagePath, state.packageName);
@@ -201,6 +201,11 @@ class Extension {
 				variables: {}
 			},
 			{
+				template: `${this.templateDir}/.gitignore.template`,
+				filename: `${pathExtension}/.gitignore`,
+				variables: {}
+			},
+			{
 				template: `${this.templateDir}/jest.config.js.template`,
 				filename: `${pathExtension}/jest.config.js`,
 				variables: {}
@@ -232,6 +237,7 @@ class Extension {
 				const content = await replacePlaceholders(template.template, template.variables);
 
 				await fs.writeFile(template.filename, content, () => { });
+				
 				return fs.existsSync(template.filename);
 			}));
 

@@ -85,8 +85,6 @@ export async function createComponent(context: ExtensionContext, uri: any) {
 
     const component = await Component.create(state);
 
-    console.log('component',component);
-
     if (component) {
         window.showInformationMessage(`Creating PWA Studio Component: '${state.componentName}'`);
     }
@@ -100,12 +98,12 @@ export async function createComponent(context: ExtensionContext, uri: any) {
 class Component {
     static isCreateed: boolean;
     static componentDir: string = '';
-    static templateDir: string = path.join(__dirname, '../src/templates/component');
+    static templateDir: string = path.join(__dirname, '../templates/component');
 
     static async create(state: State) {
         const componentDir = await this.createComponentDir(state.uri, state.componentName);
         const createFiles = await this.cerateFiles(state);
-        console.log({componentDir,createFiles});
+        
         if (componentDir && createFiles) {
             return true;
         } else {
@@ -167,11 +165,8 @@ class Component {
 
                 await fs.writeFile(template.filename, content, () => { });
 
-                console.log(template.filename);
-
                 return fs.existsSync(template.filename);
             }));
-            console.log('filesCreated',filesCreated);
 
             return filesCreated.every(f => f === true);
         } catch (error: any) {
