@@ -13,7 +13,11 @@
 	"engines": {
 		"vscode": "^1.75.0"
 	},
-	"icon": "doc/icon.png",
+	"icon": "doc/dark-icon.png",
+	"galleryBanner": {
+		"color": "#004F89",
+		"theme": "dark"
+	  },
 	"keywords": [
 		"Magento 2",
 		"PWA Studio",
