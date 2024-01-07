@@ -49,7 +49,7 @@ export async function createComponent(context: ExtensionContext, uri: any) {
         state.componentName = await input.showInputBox({
             title,
             value: state.componentName || '',
-            prompt: 'Please provide a name for the component, please try again.',
+            prompt: 'Name of the Component.',
             validate: validate,
             shouldResume: shouldResume
         });
@@ -79,19 +79,12 @@ export async function createComponent(context: ExtensionContext, uri: any) {
     }
 
     if (!state.uri) {
-        window.showErrorMessage('You need to configure the path.');
+        window.showErrorMessage('You need to configure the path, please try again.');
         return;
     }
 
-    const component = await Component.create(state);
-
-    if (component) {
-        window.showInformationMessage(`Creating PWA Studio Component: '${state.componentName}'`);
-    }
-
-    if (!component) {
-        window.showErrorMessage('Unable to create the component.');
-    }
+    await Component.create(state);
+    window.showInformationMessage(`Creating PWA Studio Component: '${state.componentName}'`);
 }
 
 
@@ -103,7 +96,7 @@ class Component {
     static async create(state: State) {
         const componentDir = await this.createComponentDir(state.uri, state.componentName);
         const createFiles = await this.cerateFiles(state);
-        
+   
         if (componentDir && createFiles) {
             return true;
         } else {
@@ -126,6 +119,7 @@ class Component {
         await fse.mkdirsSync(componentDir);
 
         this.componentDir = componentDir;
+
         if (!fs.lstatSync(componentDir).isDirectory()) {
             return false;
         }
@@ -164,10 +158,8 @@ class Component {
                 const content = await replacePlaceholders(template.template, template.variables);
 
                 await fs.writeFile(template.filename, content, () => { });
-
                 return fs.existsSync(template.filename);
             }));
-
             return filesCreated.every(f => f === true);
         } catch (error: any) {
             console.error(`Error: ${error.message}`);

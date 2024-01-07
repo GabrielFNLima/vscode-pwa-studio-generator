@@ -60,7 +60,7 @@ export async function multiStepInput(context: ExtensionContext, uri: any) {
 			step: 2,
 			totalSteps: 4,
 			value: state.packageName || '',
-			prompt: 'Please provide a package name for the extension.',
+			prompt: 'Short name of the project to put in the package.json "name" field',
 			validate: validate,
 			shouldResume: shouldResume
 		});
@@ -74,7 +74,7 @@ export async function multiStepInput(context: ExtensionContext, uri: any) {
 			step: 3,
 			totalSteps: 4,
 			value: state.author || '',
-			prompt: 'Please provide a package author for the extension.',
+			prompt: 'Name of the author to put in the package.json "author" field',
 			validate: validate,
 			shouldResume: shouldResume,
 			placeholder: 'Ex.: John Wick <jonh.wick@dev.com> '
@@ -89,7 +89,7 @@ export async function multiStepInput(context: ExtensionContext, uri: any) {
 			step: 4,
 			totalSteps: 4,
 			value: state.description || '',
-			prompt: 'Please provide a package descripion for the extension.',
+			prompt: 'Description to put in the package.json "description" field',
 			validate: validate,
 			shouldResume: shouldResume
 		});
@@ -114,15 +114,8 @@ export async function multiStepInput(context: ExtensionContext, uri: any) {
 		return;
 	}
 
-	const extension = await Extension.create(state);
-
-	if (extension) {
-		window.showInformationMessage(`Creating PWA Studio Extension: '${state.packageName}'`);
-	}
-
-	if (!extension) {
-		window.showErrorMessage('Unable to create the extension.');
-	}
+	await Extension.create(state);
+	window.showInformationMessage(`Creating PWA Studio Extension: '${state.packageName}'`);
 }
 
 
@@ -237,7 +230,6 @@ class Extension {
 				const content = await replacePlaceholders(template.template, template.variables);
 
 				await fs.writeFile(template.filename, content, () => { });
-				
 				return fs.existsSync(template.filename);
 			}));
 
