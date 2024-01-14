@@ -118,8 +118,6 @@ export async function multiStepInput(context: ExtensionContext, uri: any) {
 	window.showInformationMessage(`Creating PWA Studio Extension: '${state.packageName}'`);
 }
 
-
-
 class Extension {
 	static templateDir: string = path.join(__dirname, '../templates/extension');
 
@@ -154,9 +152,12 @@ class Extension {
 		return folderCreated.every(f => f === true);
 	}
 
+
 	static async cerateFiles(state: State) {
 		const { packageName, packagePath, description, author } = state;
 		const pathExtension = await this.pathExtension(packagePath, packageName);
+		const config = workspace.getConfiguration('devgfnl.pwaStudio.extension');
+
 		const templates = [
 			{
 				template: `${this.templateDir}/i18n/en_US.json.template`,
@@ -184,22 +185,22 @@ class Extension {
 				variables: {}
 			},
 			{
-				template: `${this.templateDir}/.editorconfig.template`,
+				template: !config.editorconfigTemplate ? `${this.templateDir}/.editorconfig.template` : config.editorconfigTemplate,
 				filename: `${pathExtension}/.editorconfig`,
 				variables: {}
 			},
 			{
-				template: `${this.templateDir}/.eslintrc.js.template`,
+				template: !config.eslintrcTemplate ? `${this.templateDir}/.eslintrc.js.template` : config.eslintrcTemplate,
 				filename: `${pathExtension}/.eslintrc.js`,
 				variables: {}
 			},
 			{
-				template: `${this.templateDir}/.gitignore.template`,
+				template: !config.eslintrcTemplate ? `${this.templateDir}/.gitignore.template` : config.gitignoreTemplate,
 				filename: `${pathExtension}/.gitignore`,
 				variables: {}
 			},
 			{
-				template: `${this.templateDir}/jest.config.js.template`,
+				template: !config.jestConfigTemplate ? `${this.templateDir}/jest.config.js.template` : config.jestConfigTemplate,
 				filename: `${pathExtension}/jest.config.js`,
 				variables: {}
 			},
@@ -213,16 +214,20 @@ class Extension {
 				}
 			},
 			{
-				template: `${this.templateDir}/prettier.config.js.template`,
+				template: !config.prettierConfigTemplate ? `${this.templateDir}/prettier.config.js.template` : config.prettierConfigTemplate,
 				filename: `${pathExtension}/prettier.config.js`,
-				variables: {}
-			},
-			{
-				template: `${this.templateDir}/README.md.template`,
-				filename: `${pathExtension}/README.md`,
 				variables: {}
 			}
 		];
+
+		if (config.createReadme === undefined || config.createReadme === true) {
+			templates.push({
+				template: !config.readmeTemplate ? `${this.templateDir}/README.md.template` : config.readmeTemplate,
+				filename: `${pathExtension}/README.md`,
+				variables: {}
+			});
+		}
+
 		const openPackageJson = `${pathExtension}/package.json`;
 
 		try {

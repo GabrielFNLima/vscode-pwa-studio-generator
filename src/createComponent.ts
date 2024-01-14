@@ -96,7 +96,7 @@ class Component {
     static async create(state: State) {
         const componentDir = await this.createComponentDir(state.uri, state.componentName);
         const createFiles = await this.cerateFiles(state);
-   
+
         if (componentDir && createFiles) {
             return true;
         } else {
@@ -130,14 +130,18 @@ class Component {
     static async cerateFiles(state: State) {
         const { componentName } = state;
         const componentNameFile = await camelCase(componentName);
+
+        const config = workspace.getConfiguration('devgfnl.pwaStudio.component');
+
+        replacePlaceholders(config.componentCssTemplate, {});
         const templates = [
             {
-                template: `${this.templateDir}/component.module.css.template`,
+                template: !config.componentCssTemplate ? `${this.templateDir}/component.module.css.template` : config.componentCssTemplate,
                 filename: `${this.componentDir}/${componentNameFile}.module.css`,
                 variables: {}
             },
             {
-                template: `${this.templateDir}/component.js.template`,
+                template: !config.componentTemplate ? `${this.templateDir}/component.js.template` : !config.componentTemplate,
                 filename: `${this.componentDir}/${componentNameFile}.js`,
                 variables: {
                     componentNameFile,
@@ -145,7 +149,7 @@ class Component {
                 }
             },
             {
-                template: `${this.templateDir}/index.js.template`,
+                template: !config.indexTemplate ? `${this.templateDir}/index.js.template` : config.indexTemplate,
                 filename: `${this.componentDir}/index.js`,
                 variables: {
                     componentNameFile

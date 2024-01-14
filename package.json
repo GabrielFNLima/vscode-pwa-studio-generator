@@ -29,6 +29,69 @@
 	"main": "./out/extension.js",
 	"activationEvents": [],
 	"contributes": {
+		"configuration": [
+			{
+				"id": "configurationSamples",
+				"title": "Configuration Sample",
+				"properties": {
+					"devgfnl.pwaStudio.component": {
+						"type": "object",
+						"default": {},
+						"description": "PWA Studio Component configuration: Configure files templates",
+						"properties": {
+							"indexTemplate": {
+								"type": "string",
+								"description": "Set your custom index.js template path, this template need to have this variables: {componentNameFile}"
+							},
+							"componentTemplate": {
+								"type": "string",
+								"description": "Set your custom component.js template path, this template need to have this variables: {componentNameFile}, {componentName}"
+							},
+							"componentCssTemplate": {
+								"type": "string",
+								"description": "Set your custom component css template path"
+							}
+						}
+					},
+					"devgfnl.pwaStudio.extension": {
+						"type": "object",
+						"default": {},
+						"description": "PWA Studio Component configuration: Configure files templates and some configurations",
+						"properties": {
+							"createReadme": {
+								"type": "boolean",
+								"description": "Create the example README.md",
+								"default": true
+							},
+							"readmeTemplate": {
+								"type": "string",
+								"description": "Set your custom README.md template path"
+							},
+							"editorconfigTemplate": {
+								"type": "string",
+								"description": "Set your custom .editorconfig template path"
+							},
+							"eslintrcTemplate": {
+								"type": "string",
+								"description": "Set your custom .eslintrc template path"
+							},
+							"gitignoreTemplate": {
+								"type": "string",
+								"description": "Set your custom .gitignore template path"
+							},
+							"jestConfigTemplate": {
+								"type": "string",
+								"description": "Set your custom .jest.config.js template path"
+							},
+							"prettierConfigTemplate": {
+								"type": "string",
+								"description": "Set your custom .prettier.config.js template path"
+							}
+						}
+					}
+				}
+			}
+		],
 		"commands": [
 			{
 				"command": "extension.createExtension",
