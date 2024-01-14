@@ -61,7 +61,7 @@ export async function multiStepInput(context: ExtensionContext, uri: any) {
 			totalSteps: 4,
 			value: state.packageName || '',
 			prompt: 'Short name of the project to put in the package.json "name" field',
-			validate: validate,
+			validate: validatePackageName,
 			shouldResume: shouldResume
 		});
 
@@ -101,10 +101,20 @@ export async function multiStepInput(context: ExtensionContext, uri: any) {
 		});
 	}
 
-	async function validate(name: string) {
+	async function validate(string: string) {
 		// ...validate...
 		await new Promise(resolve => setTimeout(resolve, 1000));
-		return name.replace(/\s/g, '').length === 0 ? 'Please input a valid package name.' : undefined;
+		return string.replace(/\s/g, '').length === 0 ? 'Please input a valid string.' : undefined;
+	}
+
+	async function validatePackageName(name: string) {
+		// ...validate...
+		await new Promise(resolve => setTimeout(resolve, 1000));
+		const regex = /^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
+
+		if (!regex.test(name)) {
+			return 'Please input a valid package name. Ex.: package-name-example, packagenameexample or @package/package-name-example ';
+		}
 	}
 
 	const state = await collectInputs();
