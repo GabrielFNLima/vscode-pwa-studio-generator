@@ -39,7 +39,8 @@ Certainly! Let's modify step 2 to make it more flexible:
     "devgfnl.pwaStudio.component": {
     "indexTemplate": "path/index.js",
     "componentCssTemplate": "path/component.module.css",
-    "componentTemplate": "path/component.js"
+    "componentTemplate": "path/component.js",
+    "useTypescript": true
    },
    "devgfnl.pwaStudio.extension": {
     "createReadme": true,
@@ -48,7 +49,8 @@ Certainly! Let's modify step 2 to make it more flexible:
     "gitignoreTemplate": "path/.gitignore",
     "jestConfigTemplate": "path/jest.config.js",
     "prettierConfigTemplate": "path/prettier.config.js",
-    "readmeTemplate": "path/README.md"
+    "readmeTemplate": "path/README.md",
+    "useTypescript": true
    }
    ```
    Choose either the `component` or `extension` block based on your needs.

@@ -1,0 +1,9 @@
+declare const styles: {
+  readonly "root": string;
+};
+export = styles;
+
+export interface Styles {
+  readonly root?: string;
+  [key: string]: string | undefined;
+}

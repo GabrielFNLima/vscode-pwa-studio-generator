@@ -1,0 +1,14 @@
+import React from 'react';
+import { mergeClasses } from '@magento/venia-ui/lib/classify';
+import defaultClasses, { Styles } from './{componentNameFile}.module.css';
+
+interface {componentName}Props {
+    classes?: Styles;
+}
+
+const {componentName} = (props: {componentName}Props) => {
+    const classes: Styles = mergeClasses(defaultClasses, props.classes);
+    return <div className={classes.root} />;
+};
+
+export default {componentName};

@@ -139,23 +139,53 @@ class Component {
                 template: !config.componentCssTemplate ? `${this.templateDir}/component.module.css.template` : config.componentCssTemplate,
                 filename: `${this.componentDir}/${componentNameFile}.module.css`,
                 variables: {}
-            },
-            {
-                template: !config.componentTemplate ? `${this.templateDir}/component.js.template` : !config.componentTemplate,
-                filename: `${this.componentDir}/${componentNameFile}.js`,
-                variables: {
-                    componentNameFile,
-                    componentName
-                }
-            },
-            {
-                template: !config.indexTemplate ? `${this.templateDir}/index.js.template` : config.indexTemplate,
-                filename: `${this.componentDir}/index.js`,
-                variables: {
-                    componentNameFile
-                }
             }
         ];
+
+        if(config.useTypescript) {
+            templates.push(
+                {
+                    template: !config.componentTemplate ? `${this.templateDir}/component.tsx.template` : !config.componentTemplate,
+                    filename: `${this.componentDir}/${componentNameFile}.tsx`,
+                    variables: {
+                        componentNameFile,
+                        componentName
+                    }
+                },
+                {
+                    template: !config.indexTemplate ? `${this.templateDir}/index.tsx.template` : config.indexTemplate,
+                    filename: `${this.componentDir}/index.tsx`,
+                    variables: {
+                        componentNameFile
+                    }
+                },
+                {
+                    template:  `${this.templateDir}/component.module.css.d.ts.template`,
+                    filename: `${this.componentDir}/${componentNameFile}.module.css.d.ts`,
+                    variables: {}
+                }
+            );
+        }
+
+        if(!config.useTypescript) {
+            templates.push(
+                {
+                    template: !config.componentTemplate ? `${this.templateDir}/component.js.template` : !config.componentTemplate,
+                    filename: `${this.componentDir}/${componentNameFile}.js`,
+                    variables: {
+                        componentNameFile,
+                        componentName
+                    }
+                },
+                {
+                    template: !config.indexTemplate ? `${this.templateDir}/index.js.template` : config.indexTemplate,
+                    filename: `${this.componentDir}/index.js`,
+                    variables: {
+                        componentNameFile
+                    }
+                }
+            );
+        }
 
         try {
             const filesCreated = await Promise.all(templates.map(async (template) => {

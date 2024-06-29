@@ -1,0 +1,2 @@
+declare module '@magento/venia-ui/*';
+declare module '@magento/peregrine/*';

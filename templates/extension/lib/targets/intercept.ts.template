@@ -1,0 +1,29 @@
+import componentOverrideMapping from './componentOverrideMapping';
+import ModuleOverridePlugin from './moduleOverrideWebpackPlugin';
+import { Target, Targets } from '@magento/pwa-buildpack';
+
+interface SpecialFeaturesFlags {
+    [key: string]: {
+        cssModules: boolean;
+        esModules: boolean;
+        graphqlQueries: boolean;
+        i18n: boolean;
+    };
+}
+
+const targets = (targets: Targets) => {
+    targets.of('@magento/pwa-buildpack').specialFeatures.tap((flags: SpecialFeaturesFlags) => {
+        flags[targets.name] = {
+            cssModules: true,
+            esModules: true,
+            graphqlQueries: true,
+            i18n: true
+        };
+    });
+
+    targets.of('@magento/pwa-buildpack').webpackCompiler.tap((compiler: any) => {
+        new ModuleOverridePlugin(componentOverrideMapping).apply(compiler);
+    });
+};
+
+export default targets;

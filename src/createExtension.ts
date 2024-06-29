@@ -168,6 +168,8 @@ class Extension {
 		const pathExtension = await this.pathExtension(packagePath, packageName);
 		const config = workspace.getConfiguration('devgfnl.pwaStudio.extension');
 
+		const fileExtension = config.get('useTypescript') ? 'ts' : 'js';
+
 		const templates = [
 			{
 				template: `${this.templateDir}/i18n/en_US.json.template`,
@@ -175,23 +177,23 @@ class Extension {
 				variables: {}
 			},
 			{
-				template: `${this.templateDir}/lib/targets/componentOverrideMapping.js.template`,
-				filename: `${pathExtension}/lib/targets/componentOverrideMapping.js`,
+				template: `${this.templateDir}/lib/targets/componentOverrideMapping.${fileExtension}.template`,
+				filename: `${pathExtension}/lib/targets/componentOverrideMapping.${fileExtension}`,
 				variables: {}
 			},
 			{
-				template: `${this.templateDir}/lib/targets/intercept.js.template`,
-				filename: `${pathExtension}/lib/targets/intercept.js`,
+				template: `${this.templateDir}/lib/targets/intercept.${fileExtension}.template`,
+				filename: `${pathExtension}/lib/targets/intercept.${fileExtension}`,
 				variables: {}
 			},
 			{
-				template: `${this.templateDir}/lib/targets/moduleOverrideWebpackPlugin.js.template`,
-				filename: `${pathExtension}/lib/targets/moduleOverrideWebpackPlugin.js`,
+				template: `${this.templateDir}/lib/targets/moduleOverrideWebpackPlugin.${fileExtension}.template`,
+				filename: `${pathExtension}/lib/targets/moduleOverrideWebpackPlugin.${fileExtension}`,
 				variables: {}
 			},
 			{
-				template: `${this.templateDir}/lib/index.js.template`,
-				filename: `${pathExtension}/lib/index.js`,
+				template: `${this.templateDir}/lib/index.${fileExtension}.template`,
+				filename: `${pathExtension}/lib/index.${fileExtension}`,
 				variables: {}
 			},
 			{
@@ -200,8 +202,8 @@ class Extension {
 				variables: {}
 			},
 			{
-				template: !config.eslintrcTemplate ? `${this.templateDir}/.eslintrc.js.template` : config.eslintrcTemplate,
-				filename: `${pathExtension}/.eslintrc.js`,
+				template: !config.eslintrcTemplate ? `${this.templateDir}/.eslintrc.${fileExtension}.template` : config.eslintrcTemplate,
+				filename: `${pathExtension}/.eslintrc.${fileExtension}`,
 				variables: {}
 			},
 			{
@@ -210,22 +212,13 @@ class Extension {
 				variables: {}
 			},
 			{
-				template: !config.jestConfigTemplate ? `${this.templateDir}/jest.config.js.template` : config.jestConfigTemplate,
-				filename: `${pathExtension}/jest.config.js`,
+				template: !config.jestConfigTemplate ? `${this.templateDir}/jest.config.${fileExtension}.template` : config.jestConfigTemplate,
+				filename: `${pathExtension}/jest.config.${fileExtension}`,
 				variables: {}
 			},
 			{
-				template: `${this.templateDir}/package.json.template`,
-				filename: `${pathExtension}/package.json`,
-				variables: {
-					packageName,
-					author,
-					description
-				}
-			},
-			{
-				template: !config.prettierConfigTemplate ? `${this.templateDir}/prettier.config.js.template` : config.prettierConfigTemplate,
-				filename: `${pathExtension}/prettier.config.js`,
+				template: !config.prettierConfigTemplate ? `${this.templateDir}/prettier.config.${fileExtension}.template` : config.prettierConfigTemplate,
+				filename: `${pathExtension}/prettier.config.${fileExtension}`,
 				variables: {}
 			}
 		];
@@ -236,6 +229,46 @@ class Extension {
 				filename: `${pathExtension}/README.md`,
 				variables: {}
 			});
+		}
+
+		if(config.useTypescript) {
+			templates.push(
+				{
+					template: `${this.templateDir}/tsconfig.json.template`,
+					filename: `${pathExtension}/tsconfig.json`,
+					variables: {}
+				},
+				{
+					template: `${this.templateDir}/lib/index.d.ts.template`,
+					filename: `${pathExtension}/lib/index.d.ts`,
+					variables: {}
+				},
+				{
+					template: `${this.templateDir}/package.json.typescript.template`,
+					filename: `${pathExtension}/package.json`,
+					variables: {
+						packageName,
+						author,
+						description,
+						fileExtension
+					}
+				},
+			);
+		}
+
+		if(!config.useTypescript) {
+			templates.push(
+				{
+					template: `${this.templateDir}/package.json.template`,
+					filename: `${pathExtension}/package.json`,
+					variables: {
+						packageName,
+						author,
+						description,
+						fileExtension
+					}
+				},
+			);
 		}
 
 		const openPackageJson = `${pathExtension}/package.json`;
