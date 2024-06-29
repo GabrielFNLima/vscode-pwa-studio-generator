@@ -50,6 +50,11 @@
 							"componentCssTemplate": {
 								"type": "string",
 								"description": "Set your custom component css template path"
+							},
+							"useTypescript": {
+								"type": "boolean",
+								"description": "Use Typescript",
+								"default": false
 							}
 						}
 					},
@@ -86,6 +91,11 @@
 							"prettierConfigTemplate": {
 								"type": "string",
 								"description": "Set your custom .prettier.config.js template path"
+							},
+							"useTypescript": {
+								"type": "boolean",
+								"description": "Use Typescript",
+								"default": false
 							}
 						}
 					}
