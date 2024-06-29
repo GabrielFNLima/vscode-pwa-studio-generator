@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/GabrielFNLima/vscode-pwa-studio-generator/compare/v1.1.0...v1.2.0) (2024-06-29)
+
+
+### Features
+
+* new extension to use typescript ([93fe4af](https://github.com/GabrielFNLima/vscode-pwa-studio-generator/commit/93fe4af0131b996e8b35485956ff0bc84d347283))
+* typescript component and extension ([884022e](https://github.com/GabrielFNLima/vscode-pwa-studio-generator/commit/884022ea4f3488a6d2294b642afdd26f92038798))
+
 ## [1.1.0](https://github.com/GabrielFNLima/vscode-pwa-studio-generator/compare/v1.0.0...v1.1.0) (2024-01-14)
 
 

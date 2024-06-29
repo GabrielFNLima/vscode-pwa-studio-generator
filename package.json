@@ -4,7 +4,7 @@
 	"description": "Tool for creating React components and enhancements for PWA Studio.",
 	"author": "Gabriel Lima <gabriel.lima@devgfnl.com>",
 	"publisher": "devgfnl",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
